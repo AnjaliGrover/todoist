@@ -1,0 +1,23 @@
+{
+  "name": "todoist_webapp",
+  "version": "1.0.0",
+  "description": "'Clone for todoist built with AngualarJs\"",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnjaliGrover/todoist.git"
+  },
+  "author": "Anjali Grover",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnjaliGrover/todoist/issues"
+  },
+  "homepage": "https://github.com/AnjaliGrover/todoist#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1"
+  }
+}
