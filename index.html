@@ -1,0 +1,360 @@
+<html>
+<title> Today: Todoist</title>
+
+<head>
+        <link href="style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+                integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+                crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+</head>
+
+<body ng-app="todoist" class="body" ng-controller="todoistController">
+        <!-- ng-app=lets start your angular where to start code processing from,ng-app helps angular understand it and stats the code -->
+        <script src="./bower_components/angular/angular.min.js"></script>
+        <script src="./app.js"></script>
+        <!-- Header starts -->
+
+        <div class="header">
+                <div class="container">
+                        <div class="row">
+                                <svg class="col-lg-4 mt-2 " xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                        color="white" viewBox="0 0 24 24" data-svgs-path="sm1/todoist_logo.svg">
+                                        <path fill="currentColor" fill-rule="evenodd"
+                                                d="M21 0H3a3 3 0 0 0-3 3v3.7L4 9c.4.2.8.2 1.1 0l8-4.6a.8.8 0 0 1 .8 0l1 .5c.2.2.1.6 0 .7L5.1 11c-.4.3-.7.3-1.2 0L0 8.8v2l4 2.4c.4.2.8.2 1.1 0l8-4.6a.8.8 0 0 1 .8 0l1 .5c.2.1.1.5 0 .6l-9.7 5.6c-.4.2-.7.3-1.2 0A857 857 0 0 1 0 13v2l4 2.3c.4.2.8.2 1.1 0l8-4.6a.8.8 0 0 1 .8 0l1 .5c.2.2.1.6 0 .7l-9.7 5.5c-.4.3-.7.3-1.2 0a857 857 0 0 1-4-2.3v4A3 3 0 0 0 3 24h18a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3">
+                                        </path>
+                                </svg>
+                                <div class="col-lg-4 abc">
+                                        <div class="input-icons">
+                                                <i class="material-icons header-icons">
+                                                        search
+                                                </i>
+                                                <input class="quick-search" ng-model="searchkey" type="text"
+                                                        Placeholder="Quick Find">
+                                                <ul class="results">
+                                                        <li
+                                                                ng-repeat="task in tasks| filter:(searchkey==undefined || searchkey==''?null:searchkey)">
+                                                                {{task.Title}}
+                                                        </li>
+                                                        <!-- any operation in double curly brackets are called expressions -->
+                                                </ul>
+                                        </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                        <i class="fas fa-plus header-icon "></i>
+                                        <span id="top_completed" class="completed_pie_stat"
+                                                data-track="navigation|karma"><svg xmlns="http://www.w3.org/2000/svg"
+                                                        width="24" height="24" viewBox="0 0 24 24">
+                                                        <defs></defs>
+                                                        <g fill="none" fill-rule="evenodd" transform="translate(3 3)">
+                                                                <mask id="4ZtaWA" fill="#fff">
+                                                                        <path id="a"
+                                                                                d="M12.3 5L7 10.3 5.4 8.6a.5.5 0 0 0-.8 0l-3.9 4a9 9 0 1 1 .5.9L5 9.7l1.6 1.7a.5.5 0 0 0 .8 0L13 5.7v3.8a.5.5 0 1 0 1 0v-5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.8z">
+                                                                        </path>
+                                                                </mask>
+                                                                <g mask="url(#4ZtaWA)">
+                                                                        <path fill="#ffffff" d="M-3-3h24v24H-3z"></path>
+                                                                </g>
+                                                        </g>
+                                                </svg><span class="count">200</span> </span>
+                                        <i class="fas fa-bell header-icon"></i>
+                                        <i class="fas fa-cog header-icon"></i>
+                                </div>
+                        </div>
+                </div>
+
+                <!-- Project Wrapper -->
+
+                <div class="row">
+                        <div class="col-sm-4 project-wrapper">
+                                <div class="row">
+                                        <div class="col-sm-3 project-outer-wrapper">
+                                        </div>
+
+                                        <div class="col-sm-9 project-inner-wrapper">
+                                                <ul style="list-style: none;">
+                                                        <li>
+                                                                <span class="fas fa-inbox inbox"
+                                                                        ng-click="addNewTask()">
+                                                                </span><b>Inbox</b>
+                                                                <span class="length-tasks">
+                                                                        {{tasks.length}}
+                                                                </span>
+                                                                </span>
+
+
+                                                        </li>
+                                                        <li>
+                                                                <i class="fas fa-calendar inbox"></i>
+                                                                Today
+                                                        </li>
+                                                        <li>
+                                                                <i class="fas fa-calendar-week inbox"></i>
+                                                                Next 7 days
+                                                        </li>
+                                                        <li class="border-needed">
+                                                                <i class="fas fa-chevron-right inbox"> </i>
+                                                                <i class="material-icons add-project"
+                                                                        ng-click="addNewProject()">add</i>
+                                                                <a
+                                                                        ng-click="showProjects = !showProjects"><b>Projects</b></a>
+                                                                <br>
+                                                                <div ng-show="showProjects">
+                                                                        <ul>
+                                                                                <li class="projects"
+                                                                                        ng-repeat="item in projects">
+                                                                                        <span class="item-title"
+                                                                                                ng-bind="item.Title"></span>
+                                                                                        <div class="ellipsis"
+                                                                                                ng-click="showOptions(item._id)">
+                                                                                                <i
+                                                                                                        class="fas fa-ellipsis-h"></i>
+                                                                                        </div>
+                                                                                        <div ng-class="item._id==showOptionsForId?'VisibleOptions':''"
+                                                                                                ng-show="Visible"
+                                                                                                class="project-controls">
+
+                                                                                                <button class="button"
+                                                                                                        ng-click="showInputBox()">
+                                                                                                        <span
+                                                                                                                class="menu_icon"><svg
+                                                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                                                        width="24"
+                                                                                                                        height="24"
+                                                                                                                        data-svgs-path="sm1/edit.svg">
+                                                                                                                        <g fill="none"
+                                                                                                                                fill-rule="evenodd">
+                                                                                                                                <path fill="currentColor"
+                                                                                                                                        d="M9.5 19h10a.5.5 0 1 1 0 1h-10a.5.5 0 1 1 0-1z">
+                                                                                                                                </path>
+                                                                                                                                <path stroke="currentColor"
+                                                                                                                                        d="M4.42 16.03a1.5 1.5 0 0 0-.43.9l-.22 2.02a.5.5 0 0 0 .55.55l2.02-.21a1.5 1.5 0 0 0 .9-.44L18.7 7.4a1.5 1.5 0 0 0 0-2.12l-.7-.7a1.5 1.5 0 0 0-2.13 0L4.42 16.02z">
+                                                                                                                                </path>
+                                                                                                                        </g>
+                                                                                                                </svg></span>
+                                                                                                        Edit</button>
+                                                                                                <button class="button"
+                                                                                                        ng-click="updateProject(item); hideEditBox()">
+                                                                                                        <span
+                                                                                                                class="menu_icon"><svg
+                                                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                                                        width="24"
+                                                                                                                        height="24"
+                                                                                                                        data-svgs-path="sm1/add_above.svg">
+                                                                                                                        <path fill="currentColor"
+                                                                                                                                fill-rule="evenodd"
+                                                                                                                                d="M9 6.74L6.35 9.4a.5.5 0 0 1-.7-.7l3.53-3.54a.5.5 0 0 1 .7 0l3.55 3.53a.5.5 0 0 1-.71.7L10 6.69V18.5a.5.5 0 1 1-1 0V6.74zM17 15h2.5a.5.5 0 1 1 0 1H17v2.5a.5.5 0 1 1-1 0V16h-2.5a.5.5 0 1 1 0-1H16v-2.5a.5.5 0 1 1 1 0V15z">
+                                                                                                                        </path>
+                                                                                                                </svg></span>
+                                                                                                        Update</button>
+                                                                                                <button class="button"
+                                                                                                        ng-click="deleteProject(item)">
+                                                                                                        <span
+                                                                                                                class="menu_icon"><svg
+                                                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                                                        width="24"
+                                                                                                                        height="24"
+                                                                                                                        data-svgs-path="sm1/trash.svg">
+                                                                                                                        <g fill="none"
+                                                                                                                                fill-rule="evenodd">
+                                                                                                                                <path
+                                                                                                                                        d="M0 0h24v24H0z">
+                                                                                                                                </path>
+                                                                                                                                <rect width="14"
+                                                                                                                                        height="1"
+                                                                                                                                        x="5"
+                                                                                                                                        y="6"
+                                                                                                                                        fill="currentColor"
+                                                                                                                                        rx=".5">
+                                                                                                                                </rect>
+                                                                                                                                <path fill="currentColor"
+                                                                                                                                        d="M10 9h1v8h-1V9zm3 0h1v8h-1V9z">
+                                                                                                                                </path>
+                                                                                                                                <path stroke="currentColor"
+                                                                                                                                        d="M17.5 6.5h-11V18A1.5 1.5 0 0 0 8 19.5h8a1.5 1.5 0 0 0 1.5-1.5V6.5zm-9 0h7V5A1.5 1.5 0 0 0 14 3.5h-4A1.5 1.5 0 0 0 8.5 5v1.5z">
+                                                                                                                                </path>
+                                                                                                                        </g>
+                                                                                                                </svg></span>
+                                                                                                        Delete</button>
+
+
+                                                                                        </div>
+
+                                                                </div>
+
+
+
+
+                                                                <div ng-show="IsVisible">
+                                                                        <input ng-model="updateProj.Title" type="text"
+                                                                                Placeholder="Please Provide Title Here!"><br>
+                                                                        <button class="btn btn-danger btn-sm"
+                                                                                ng-click="hideInputBox()">
+                                                                                Cancel</button>
+                                                                </div>
+
+
+
+                                                                <div ng-if="showAddProject">
+                                                                        <input ng-model="newProject.Title" type="text"
+                                                                                Placeholder="Name Your Project"><br>
+                                                                        <button class="btn btn-danger btn-sm"
+                                                                                ng-click="addProject()">
+                                                                                Add
+                                                                                Project</button> <button
+                                                                                class="btn btn-link btn-sm"
+                                                                                ng-click="hideNewProject()">Cancel
+                                                                        </button>
+
+                                                                </div>
+
+                                                        <li class="border-needed">
+                                                                <i class="fas fa-chevron-right inbox"></i>
+                                                                <b>Labels</b>
+                                                                <i class="material-icons add-label">add</i>
+                                                        </li>
+                                                        <li class="border-needed">
+                                                                <i class="fas fa-chevron-right inbox"></i>
+                                                                <b>Filters</b>
+                                                                <i class="material-icons add-filter">add</i>
+
+
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                </div>
+                        </div>
+
+                        <!-- Task Wrapper -->
+
+
+                        <div class="col-sm-6 task-wrapper">
+
+                                <div>
+                                        <div class="main-content" ng-click="showtasks = !showtasks">
+                                                Inbox
+                                        </div>
+                                        <div class="show-tasks" ng-show="showtasks">
+                                                <ul class="a">
+                                                        <li class="tasks" ng-model="tasks" ng-repeat="task in tasks ">
+
+                                                                <div class="task-title" ng-bind="task.Title">
+                                                                </div>
+                                                                <div class="ellipsis" ng-click="showOptions(task._id)">
+                                                                        <i class="fas fa-ellipsis-h"></i>
+                                                                </div>
+
+                                                                <div ng-class="task._id==showOptionsForId?'VisibleOptions':''"
+                                                                        ng-show="Visible" class="task-controls">
+                                                                        <button class="button" ng-click="showEditBox()">
+                                                                                <span class="menu_icon"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="24" height="24"
+                                                                                                data-svgs-path="sm1/edit.svg">
+                                                                                                <g fill="none"
+                                                                                                        fill-rule="evenodd">
+                                                                                                        <path fill="currentColor"
+                                                                                                                d="M9.5 19h10a.5.5 0 1 1 0 1h-10a.5.5 0 1 1 0-1z">
+                                                                                                        </path>
+                                                                                                        <path stroke="currentColor"
+                                                                                                                d="M4.42 16.03a1.5 1.5 0 0 0-.43.9l-.22 2.02a.5.5 0 0 0 .55.55l2.02-.21a1.5 1.5 0 0 0 .9-.44L18.7 7.4a1.5 1.5 0 0 0 0-2.12l-.7-.7a1.5 1.5 0 0 0-2.13 0L4.42 16.02z">
+                                                                                                        </path>
+                                                                                                </g>
+                                                                                        </svg></span>
+                                                                                Edit</button>
+                                                                        <button class="button"
+                                                                                ng-click="updateTask(task); hideInputBox()">
+                                                                                <span class="menu_icon"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="24" height="24"
+                                                                                                data-svgs-path="sm1/add_above.svg">
+                                                                                                <path fill="currentColor"
+                                                                                                        fill-rule="evenodd"
+                                                                                                        d="M9 6.74L6.35 9.4a.5.5 0 0 1-.7-.7l3.53-3.54a.5.5 0 0 1 .7 0l3.55 3.53a.5.5 0 0 1-.71.7L10 6.69V18.5a.5.5 0 1 1-1 0V6.74zM17 15h2.5a.5.5 0 1 1 0 1H17v2.5a.5.5 0 1 1-1 0V16h-2.5a.5.5 0 1 1 0-1H16v-2.5a.5.5 0 1 1 1 0V15z">
+                                                                                                </path>
+                                                                                        </svg></span>
+                                                                                Update</button>
+
+                                                                        <button class="button"
+                                                                                ng-click="deleteTask(task)">
+                                                                                <span class="menu_icon"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="24" height="24"
+                                                                                                data-svgs-path="sm1/trash.svg">
+                                                                                                <g fill="none"
+                                                                                                        fill-rule="evenodd">
+                                                                                                        <path
+                                                                                                                d="M0 0h24v24H0z">
+                                                                                                        </path>
+                                                                                                        <rect width="14"
+                                                                                                                height="1"
+                                                                                                                x="5"
+                                                                                                                y="6"
+                                                                                                                fill="currentColor"
+                                                                                                                rx=".5">
+                                                                                                        </rect>
+                                                                                                        <path fill="currentColor"
+                                                                                                                d="M10 9h1v8h-1V9zm3 0h1v8h-1V9z">
+                                                                                                        </path>
+                                                                                                        <path stroke="currentColor"
+                                                                                                                d="M17.5 6.5h-11V18A1.5 1.5 0 0 0 8 19.5h8a1.5 1.5 0 0 0 1.5-1.5V6.5zm-9 0h7V5A1.5 1.5 0 0 0 14 3.5h-4A1.5 1.5 0 0 0 8.5 5v1.5z">
+                                                                                                        </path>
+                                                                                                </g>
+                                                                                        </svg></span>
+                                                                                Delete</button>
+
+                                                                </div>
+                                                        </li>
+                                                </ul>
+
+                                                <div ng-show="View">
+                                                        <input ng-model="updateTodo.Title" type="text"
+                                                                Placeholder="Please Provide Title Here!"><br>
+                                                        <input ng-model="updateTodo.DueDate" type="date"
+                                                                Placeholder=" Please Provide Due Date Here!">
+
+                                                        <button class="btn btn-danger btn-sm" ng-click="hideEditBox()">
+                                                                Cancel</button>
+                                                </div>
+
+
+                                        </div>
+                                        <div class="sub-content">
+                                                <i class="fas fa-plus-circle" ng-click="addNewTask()"></i>
+                                                <span class="sub-content"> Add Task</span>
+                                        </div>
+
+
+                                        <div class="add-task-form" ng-if="showAddTask">
+                                                <input ng-model="newTask.Title" type="text"
+                                                        Placeholder="Name Your Task"><br>
+                                                <input ng-model="newTask.DueDate" type="date"
+                                                        Placeholder=" Please Define Due Date">
+                                                <button class="btn btn-success btn-sm" ng-click="addTask()">
+                                                        Confirm</button>
+                                                <button class="btn btn-danger btn-sm"
+                                                        ng-click="hideNewTask()">Cancel</button>
+                                        </div>
+
+
+
+                                </div>
+                        </div>
+
+                        <!-- Side Wrapper -->
+
+
+                        <div class="col-sm-2 side-wrapper"></div>
+                </div>
+
+        </div>
+</body>
+
+</html>
